@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59A6EFB0239538B900850A64 /* UIViewPreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A6EFAF239538B900850A64 /* UIViewPreviewProvider.swift */; };
+		59A6EFB2239538CD00850A64 /* RoseChartView+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A6EFB1239538CD00850A64 /* RoseChartView+Preview.swift */; };
 		59B0E4F8238546C700704D8A /* RoseChart in Frameworks */ = {isa = PBXBuildFile; productRef = 59B0E4F7238546C700704D8A /* RoseChart */; };
 		59DFFBA7238543F5002E27D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DFFBA6238543F5002E27D5 /* AppDelegate.swift */; };
 		59DFFBA9238543F5002E27D5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DFFBA8238543F5002E27D5 /* SceneDelegate.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59A6EFAF239538B900850A64 /* UIViewPreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewPreviewProvider.swift; sourceTree = "<group>"; };
+		59A6EFB1239538CD00850A64 /* RoseChartView+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoseChartView+Preview.swift"; sourceTree = "<group>"; };
 		59B0E4F6238546A100704D8A /* swift-rose-chart */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "swift-rose-chart"; path = ..; sourceTree = "<group>"; };
 		59DFFBA3238543F5002E27D5 /* SwiftRoseChartExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftRoseChartExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59DFFBA6238543F5002E27D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +72,8 @@
 		59DFFBA5238543F5002E27D5 /* SwiftRoseChartExample */ = {
 			isa = PBXGroup;
 			children = (
+				59A6EFAF239538B900850A64 /* UIViewPreviewProvider.swift */,
+				59A6EFB1239538CD00850A64 /* RoseChartView+Preview.swift */,
 				59DFFBA6238543F5002E27D5 /* AppDelegate.swift */,
 				59DFFBA8238543F5002E27D5 /* SceneDelegate.swift */,
 				59DFFBAA238543F5002E27D5 /* ViewController.swift */,
@@ -153,6 +159,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59A6EFB0239538B900850A64 /* UIViewPreviewProvider.swift in Sources */,
+				59A6EFB2239538CD00850A64 /* RoseChartView+Preview.swift in Sources */,
 				59DFFBAB238543F5002E27D5 /* ViewController.swift in Sources */,
 				59DFFBA7238543F5002E27D5 /* AppDelegate.swift in Sources */,
 				59DFFBA9238543F5002E27D5 /* SceneDelegate.swift in Sources */,
