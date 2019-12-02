@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:../.."
+      name = "..">
+      <Group
+         location = "group:Example"
+         name = "Example">
+         <FileRef
+            location = "group:SwiftRoseChartExample.xcodeproj">
+         </FileRef>
+         <Group
+            location = "group:SwiftRoseChartExample"
+            name = "SwiftRoseChartExample">
+            <FileRef
+               location = "group:ViewController.swift">
+            </FileRef>
+            <Group
+               location = "group:Assets.xcassets"
+               name = "Assets.xcassets">
+               <Group
+                  location = "group:AppIcon.appiconset"
+                  name = "AppIcon.appiconset">
+                  <FileRef
+                     location = "group:Contents.json">
+                  </FileRef>
+               </Group>
+               <FileRef
+                  location = "group:Contents.json">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:Base.lproj"
+               name = "Base.lproj">
+               <FileRef
+                  location = "group:LaunchScreen.storyboard">
+               </FileRef>
+               <FileRef
+                  location = "group:Main.storyboard">
+               </FileRef>
+            </Group>
+            <FileRef
+               location = "group:AppDelegate.swift">
+            </FileRef>
+            <FileRef
+               location = "group:Info.plist">
+            </FileRef>
+            <FileRef
+               location = "group:SceneDelegate.swift">
+            </FileRef>
+         </Group>
+      </Group>
+      <Group
+         location = "group:Tests"
+         name = "Tests">
+         <Group
+            location = "group:swift-rose-chartTests"
+            name = "swift-rose-chartTests">
+            <FileRef
+               location = "group:swift_rose_chartTests.swift">
+            </FileRef>
+            <FileRef
+               location = "group:XCTestManifests.swift">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:LinuxMain.swift">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
+         location = "group:Package.swift">
+      </FileRef>
+      <Group
+         location = "group:Sources"
+         name = "Sources">
+         <Group
+            location = "group:swift-rose-chart"
+            name = "swift-rose-chart">
+            <FileRef
+               location = "group:swift_rose_chart.swift">
+            </FileRef>
+         </Group>
+      </Group>
+      <FileRef
+         location = "group:swift-rose-chart.xcodeproj">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "self:">
+   </FileRef>
+</Workspace>
