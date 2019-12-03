@@ -45,18 +45,12 @@ public class RoseChartView: UIView {
 
     public var bars: [RoseChartBar] = [] {
         didSet {
-            updateBarItems()
+            updateBarItems(animated: isInAnimation)
         }
     }
 
     // TODO: Cache
     private var maxBarValue: Double { bars.map({ $0.value }).max() ?? 0 }
-
-    public var barLineColor: UIColor = .blue {
-        didSet {
-            updateBarItems()
-        }
-    }
 
     // MARK: - Stamp Values
 
@@ -83,6 +77,8 @@ public class RoseChartView: UIView {
             updateStampColors()
         }
     }
+
+    private var isInAnimation: Bool = false
 
     // MARK: - Init
 
@@ -132,7 +128,8 @@ public class RoseChartView: UIView {
             barsView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
             barsView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
         ])
-        updateBarItems()
+        // TODO: needed here?
+//        updateBarItems()
 
         // Stamp View
         stampView.translatesAutoresizingMaskIntoConstraints = false
@@ -175,16 +172,32 @@ public class RoseChartView: UIView {
         scaleView.scaleBackgroundColor = scaleBackgroundColor
     }
 
-    private func updateBarItems() {
+    public func animateBars(_ bars: [RoseChartBar]) {
+        isInAnimation = true
+        self.bars = bars
+        isInAnimation = false
+    }
+
+    private func updateBarItems(animated: Bool) {
         let barsCount = bars.count
-        barsView.barItems = bars.enumerated().map { enumerated in
+        // skip update when there are no bars
+        if barsCount == 0 && barsView.barItems.count == 0 { return }
+
+        let newBarItems = bars.enumerated().map { enumerated -> BarItem in
             let (index, bar) = enumerated
 
             let position = Double(index) / Double(barsCount)
             let value = bar.value / maxBarValue
 
-            return BarItem(position: position, start: 0, end: value, color: .red, width: 2.0)
+            return BarItem(position: position, start: 0, end: value, color: bar.color, width: 2.0)
         }
+
+        if animated {
+            barsView.animateBarItems(newBarItems)
+        } else {
+            barsView.barItems = newBarItems
+        }
+
         // update scale if needed
         switch scale {
         case .values:

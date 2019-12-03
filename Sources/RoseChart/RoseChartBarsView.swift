@@ -14,39 +14,65 @@ internal class RoseChartBarsView: UIView {
 
     internal var barItems: [BarItem] = [] {
         didSet {
-            updateBarItemLayers()
+            updateBarItemLayers(animated: isInAnimation)
         }
     }
 
     private var barItemLayers: [BarItemLayer] = []
 
+    private var isInAnimation: Bool = false
+
+    // MARK: - Init
+
     internal init() {
         super.init(frame: .zero)
-        updateBarItemLayers()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func updateBarItemLayers() {
-        for barItemLayer in barItemLayers {
-            barItemLayer.layer.removeFromSuperlayer()
+    public func animateBarItems(_ barItems: [BarItem]) {
+        isInAnimation = true
+        self.barItems = barItems
+        isInAnimation = false
+    }
+
+    private func updateBarItemLayers(animated: Bool) {
+        let dropLayerCount = barItemLayers.count - barItems.count
+        if dropLayerCount > 0 {
+            let range = barItemLayers.index(barItemLayers.endIndex, offsetBy: -(dropLayerCount)) ..< barItemLayers.endIndex
+            let remove = barItemLayers[range]
+            remove.forEach({ $0.layer.removeFromSuperlayer() })
+            barItemLayers.removeLast(dropLayerCount)
         }
 
-        barItemLayers = barItems.map { barItem in
-            let shapeLayer = CAShapeLayer()
+        barItemLayers = barItems.enumerated().map { enumerated in
+            let (index, barItem) = enumerated
+            let shapeLayer: CAShapeLayer
+            let isReused: Bool
+            if let reusableShapeLayer = barItemLayers[safe: index]?.layer {
+                shapeLayer = reusableShapeLayer
+                isReused = true
+            } else {
+                shapeLayer = CAShapeLayer()
+                isReused = false
+            }
+
             shapeLayer.strokeColor = barItem.color.cgColor
             shapeLayer.fillColor = UIColor.clear.cgColor
             shapeLayer.lineCap = .round
             shapeLayer.lineWidth = barItem.width
             shapeLayer.strokeStart = CGFloat(barItem.start)
             shapeLayer.strokeEnd = CGFloat(barItem.end)
-            layer.addSublayer(shapeLayer)
+            if !isReused {
+                layer.addSublayer(shapeLayer)
+            }
 
             return BarItemLayer(barItem: barItem, layer: shapeLayer)
         }
 
+        setNeedsLayout()
     }
 
     override func layoutSubviews() {
