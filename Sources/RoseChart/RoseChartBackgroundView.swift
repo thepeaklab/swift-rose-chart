@@ -10,35 +10,43 @@
 import UIKit
 
 
+@available(tvOS 12.0, *)
 internal class RoseChartScaleView: UIView {
 
-    // MARK: - Variables
+    // MARK: - Internal Values
 
     internal var scaleLineColors: [UIColor] = [.lightGray, .black] {
         didSet {
             updateScaleGradientLayer()
         }
     }
+
     internal var scaleLineWidth: CGFloat = 1.0 {
         didSet {
             updateScaleLayers()
         }
     }
+
     internal var scaleSteps: [Double] = [] {
         didSet {
             updateScaleLayers()
         }
     }
+
     internal var scaleBackgroundColor: UIColor = .clear {
         didSet {
             updateScaleBackgroundLayer()
         }
     }
 
+    // MARK: - Private Values
+
     private var scaleStepLayers: [ScaleStepLayer] = []
     private var scaleStepLayersParent = CALayer()
     private var backgroundLayer = CAShapeLayer()
     private var scaleGradientLayer = CAGradientLayer()
+
+    // MARK: - Init
 
     internal init() {
         super.init(frame: .zero)

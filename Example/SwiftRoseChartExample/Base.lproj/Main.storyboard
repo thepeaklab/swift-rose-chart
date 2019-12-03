@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,15 +22,27 @@
                                     <constraint firstAttribute="width" secondItem="a59-lL-yAZ" secondAttribute="height" multiplier="1:1.3" id="Qy8-0g-6TQ"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7B-eO-6RT">
+                                <rect key="frame" x="131" y="730" width="152" height="30"/>
+                                <state key="normal" title="Animate Random Bars"/>
+                                <connections>
+                                    <action selector="actionAnimateRandomBars:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CTb-Zc-Jpl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="i7B-eO-6RT" firstAttribute="top" secondItem="a59-lL-yAZ" secondAttribute="bottom" constant="47" id="5eG-ci-ay0"/>
                             <constraint firstItem="a59-lL-yAZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="Iap-d4-cx8"/>
+                            <constraint firstItem="i7B-eO-6RT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Phs-eW-Ide"/>
                             <constraint firstItem="a59-lL-yAZ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="bNd-TA-qpR"/>
                             <constraint firstItem="a59-lL-yAZ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="obA-8q-UkI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="roseChartView" destination="a59-lL-yAZ" id="atn-hF-sZP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

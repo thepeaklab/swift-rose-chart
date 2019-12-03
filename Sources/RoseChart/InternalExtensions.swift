@@ -10,6 +10,8 @@
 import UIKit
 
 
+// MARK: - NSLayoutAnchor
+
 internal extension NSLayoutAnchor {
 
     @objc func constraint(greaterThanOrEqualTo anchor: NSLayoutAnchor<AnchorType>,
@@ -22,6 +24,8 @@ internal extension NSLayoutAnchor {
 
 }
 
+// MARK: - CGFloat
+
 internal extension CGFloat {
 
     func toRadians() -> CGFloat {
@@ -30,6 +34,7 @@ internal extension CGFloat {
 
 }
 
+// MARK: - Double
 
 internal extension Double {
 

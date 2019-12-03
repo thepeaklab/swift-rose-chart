@@ -12,6 +12,8 @@ import UIKit
 
 internal class RoseChartStampView: UIView {
 
+    // MARK: - Internal Values
+
     internal var stampBackgroundColors: [UIColor] = [.blue, .red] {
         didSet {
             updateStampLayer()
@@ -30,6 +32,8 @@ internal class RoseChartStampView: UIView {
         }
     }
 
+    // MARK: - Private Values
+
     private var stampMaskLayer = CAShapeLayer()
     private var stampShadowLayer = CAShapeLayer()
     private var stampGradientLayer = CAGradientLayer()
@@ -38,6 +42,8 @@ internal class RoseChartStampView: UIView {
     private var stampLineMaskLayer = CAShapeLayer()
 
     private var stampLineIndicatorLayers: [StampLineIndicatorLayer] = []
+
+    // MARK: - Init
 
     internal init() {
         super.init(frame: .zero)
@@ -50,6 +56,8 @@ internal class RoseChartStampView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - layoutSubviews
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -78,6 +86,8 @@ internal class RoseChartStampView: UIView {
             shapeLayer.path = stampLinePath
         }
     }
+
+    // MARK: - Updating Values
 
     private func updateStampLayer() {
         if stampShadowLayer.superlayer == nil {
@@ -143,6 +153,7 @@ internal class RoseChartStampView: UIView {
 
 }
 
+// MARK: - StampLineIndicator
 
 internal struct StampLineIndicator {
 

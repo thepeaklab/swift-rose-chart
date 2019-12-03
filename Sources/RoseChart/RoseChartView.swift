@@ -10,13 +10,24 @@
 import UIKit
 
 
+@available(tvOS 12.0, *)
 public class RoseChartView: UIView {
+
+    // MARK: - Internal Values
 
     internal var squareView = UIView()
     internal var scaleView = RoseChartScaleView()
     internal var barsView = RoseChartBarsView()
     internal var stampView = RoseChartStampView()
     internal var stampViewSizeConstraint = NSLayoutConstraint()
+
+    // MARK: - Scale Values
+
+    public var scale: RoseChartScale = .automatic(count: 4) {
+        didSet {
+            updateScaleSteps()
+        }
+    }
 
     public var scaleLineColors: [UIColor] = [.lightGray, .black] {
         didSet {
@@ -30,9 +41,28 @@ public class RoseChartView: UIView {
         }
     }
 
+    // MARK: - Bar Values
+
+    public var bars: [RoseChartBar] = [] {
+        didSet {
+            updateBarItems()
+        }
+    }
+
+    // TODO: Cache
+    private var maxBarValue: Double { bars.map({ $0.value }).max() ?? 0 }
+
     public var barLineColor: UIColor = .blue {
         didSet {
-            updateBarLineColors()
+            updateBarItems()
+        }
+    }
+
+    // MARK: - Stamp Values
+
+    public var isStampVisible: Bool = true {
+        didSet {
+            updateStampColors()
         }
     }
 
@@ -53,6 +83,8 @@ public class RoseChartView: UIView {
             updateStampColors()
         }
     }
+
+    // MARK: - Init
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,12 +121,7 @@ public class RoseChartView: UIView {
             scaleView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
         ])
         updateScaleColors()
-        scaleView.scaleSteps = [
-            1.00,
-            0.75,
-            0.50,
-            0.25
-        ]
+        updateScaleSteps()
 
         // Bars View
         barsView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +132,7 @@ public class RoseChartView: UIView {
             barsView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
             barsView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
         ])
-        updateBarLineColors()
+        updateBarItems()
 
         // Stamp View
         stampView.translatesAutoresizingMaskIntoConstraints = false
@@ -123,27 +150,47 @@ public class RoseChartView: UIView {
         ]
     }
 
+    // MARK: - Updating Values
+
+    private func updateScaleSteps() {
+        switch scale {
+        case .automatic(let count):
+            scaleView.scaleSteps = (0...count).map { Double($0) / Double(count) }
+        case .percentage(let steps):
+            scaleView.scaleSteps = steps.map { max(min($0, 1), 0) }
+            break
+        case .values(let values):
+            let max = maxBarValue
+            guard max != 0 else {
+                scaleView.scaleSteps = []
+                return
+            }
+            scaleView.scaleSteps = values.map { $0 / max }
+            break
+        }
+    }
+
     private func updateScaleColors() {
         scaleView.scaleLineColors = scaleLineColors
         scaleView.scaleBackgroundColor = scaleBackgroundColor
     }
 
-    private func updateBarLineColors() {
-        let max = 144
-        var val = 0.40
-        var inc = 0.025
+    private func updateBarItems() {
+        let barsCount = bars.count
+        barsView.barItems = bars.enumerated().map { enumerated in
+            let (index, bar) = enumerated
 
-        barsView.barItems = (0...max).map { i in
-            val += inc
-            if val >= 1 || val <= 0.4 {
-                inc = inc * -1
-            }
-            if Int.random(in: 0...7) == 7 {
-                inc = inc * -1
-            }
+            let position = Double(index) / Double(barsCount)
+            let value = bar.value / maxBarValue
 
-            let p = Double(i) / Double(max)
-            return BarItem(position: p, start: 0.25, end: val, color: barLineColor, width: 2.0)
+            return BarItem(position: position, start: 0, end: value, color: .red, width: 2.0)
+        }
+        // update scale if needed
+        switch scale {
+        case .values:
+            updateScaleSteps()
+        default:
+            break
         }
     }
 
@@ -155,6 +202,8 @@ public class RoseChartView: UIView {
     }
 
     private func updateStampColors() {
+        stampView.isHidden = !isStampVisible
+        if !isStampVisible { return } // skip updating other values when stamp is invisible
         stampView.stampBackgroundColors = stampBackgroundColors
         stampView.stampLineColors = stampLineColors
     }
