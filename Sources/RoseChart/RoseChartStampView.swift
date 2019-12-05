@@ -22,7 +22,7 @@ internal class RoseChartStampView: UIView {
 
     internal var stampLineIndicators: [StampLineIndicator] = [] {
         didSet {
-            updateStampLineIndicatorLayers()
+            updateStampLineIndicatorLayers(animated: isInAnimation)
         }
     }
 
@@ -43,6 +43,8 @@ internal class RoseChartStampView: UIView {
 
     private var stampLineIndicatorLayers: [StampLineIndicatorLayer] = []
 
+    private var isInAnimation: Bool = false
+
     // MARK: - Init
 
     internal init() {
@@ -50,7 +52,6 @@ internal class RoseChartStampView: UIView {
 
         updateStampLayer()
         updateStampLineLayer()
-        updateStampLineIndicatorLayers()
     }
 
     required init?(coder: NSCoder) {
@@ -130,13 +131,34 @@ internal class RoseChartStampView: UIView {
         setNeedsLayout()
     }
 
-    private func updateStampLineIndicatorLayers() {
-        for stampLineIndicatorLayer in stampLineIndicatorLayers {
-            stampLineIndicatorLayer.layer.removeFromSuperlayer()
+    public func animateStampLineIndicators(_ stampLineIndicators: [StampLineIndicator]) {
+        isInAnimation = true
+        self.stampLineIndicators = stampLineIndicators
+        isInAnimation = false
+    }
+
+    private func updateStampLineIndicatorLayers(animated: Bool) {
+        let dropLayerCount = stampLineIndicatorLayers.count - stampLineIndicators.count
+        if dropLayerCount > 0 {
+            let range = stampLineIndicatorLayers.index(stampLineIndicatorLayers.endIndex,
+                                                       offsetBy: -(dropLayerCount)) ..< stampLineIndicatorLayers.endIndex
+            let remove = stampLineIndicatorLayers[range]
+            remove.forEach({ $0.layer.removeFromSuperlayer() })
+            stampLineIndicatorLayers.removeLast(dropLayerCount)
         }
 
-        stampLineIndicatorLayers = stampLineIndicators.map { stampLineIndicator in
-            let shapeLayer = CAShapeLayer()
+        stampLineIndicatorLayers = stampLineIndicators.enumerated().map { enumerated in
+            let (index, stampLineIndicator) = enumerated
+            let shapeLayer: CAShapeLayer
+            let isReused: Bool
+            if let reusableShapeLayer = stampLineIndicatorLayers[safe: index]?.layer {
+                shapeLayer = reusableShapeLayer
+                isReused = true
+            } else {
+                shapeLayer = CAShapeLayer()
+                isReused = false
+            }
+
             shapeLayer.lineWidth = 5
             shapeLayer.strokeColor = stampLineIndicator.color.cgColor
             shapeLayer.fillColor = UIColor.clear.cgColor
@@ -144,7 +166,9 @@ internal class RoseChartStampView: UIView {
             shapeLayer.strokeStart = CGFloat(stampLineIndicator.from)
             shapeLayer.strokeEnd = CGFloat(stampLineIndicator.to)
             shapeLayer.transform = CATransform3DMakeRotation(CGFloat((-90.0).toRadians()), 0, 0, 1)
-            layer.addSublayer(shapeLayer)
+            if !isReused {
+                layer.addSublayer(shapeLayer)
+            }
 
             return StampLineIndicatorLayer(layer: shapeLayer, stampLineIndicator: stampLineIndicator)
         }

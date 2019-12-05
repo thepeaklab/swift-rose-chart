@@ -41,7 +41,8 @@ internal class RoseChartBarsView: UIView {
     private func updateBarItemLayers(animated: Bool) {
         let dropLayerCount = barItemLayers.count - barItems.count
         if dropLayerCount > 0 {
-            let range = barItemLayers.index(barItemLayers.endIndex, offsetBy: -(dropLayerCount)) ..< barItemLayers.endIndex
+            let range = barItemLayers.index(barItemLayers.endIndex,
+                                            offsetBy: -(dropLayerCount)) ..< barItemLayers.endIndex
             let remove = barItemLayers[range]
             remove.forEach({ $0.layer.removeFromSuperlayer() })
             barItemLayers.removeLast(dropLayerCount)

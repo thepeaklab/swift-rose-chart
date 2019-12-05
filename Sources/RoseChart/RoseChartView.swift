@@ -78,6 +78,12 @@ public class RoseChartView: UIView {
         }
     }
 
+    public var stampIndicators: [RoseChartStampIndicator] = [] {
+        didSet {
+            updateStampIndicators(animated: isInAnimation)
+        }
+    }
+
     private var isInAnimation: Bool = false
 
     // MARK: - Init
@@ -142,9 +148,6 @@ public class RoseChartView: UIView {
         ])
         updateStampSizeConstraint()
         updateStampColors()
-        stampView.stampLineIndicators = [
-            StampLineIndicator(from: 0, to: 0.25, color: .red)
-        ]
     }
 
     // MARK: - Updating Values
@@ -204,6 +207,30 @@ public class RoseChartView: UIView {
             updateScaleSteps()
         default:
             break
+        }
+    }
+
+    public func animateStampIndicators(_ stampIndicators: [RoseChartStampIndicator]) {
+        isInAnimation = true
+        self.stampIndicators = stampIndicators
+        isInAnimation = false
+    }
+
+    private func updateStampIndicators(animated: Bool) {
+        let barsCount = bars.count
+        // skip update when there are no bars
+        if barsCount == 0 && barsView.barItems.count == 0 { return }
+
+        let stampLineIndicators = stampIndicators.map { indicator in
+            return StampLineIndicator(from: Double(indicator.from) / Double(barsCount),
+                                      to: Double(indicator.to) / Double(barsCount),
+                                      color: indicator.color)
+        }
+
+        if animated {
+            stampView.animateStampLineIndicators(stampLineIndicators)
+        } else {
+            stampView.stampLineIndicators = stampLineIndicators
         }
     }
 

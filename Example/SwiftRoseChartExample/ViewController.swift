@@ -50,6 +50,16 @@ class ViewController: UIViewController {
         } else {
             roseChartView.bars = newBars
         }
+
+        let stampIndicators = [
+            RoseChartStampIndicator(from: (0...10).randomElement()!, to: (20...30).randomElement()!, color: #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)),
+            RoseChartStampIndicator(from: (70...90).randomElement()!, to: (95...100).randomElement()!, color: #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)),
+        ]
+        if animated {
+            roseChartView.animateStampIndicators(stampIndicators)
+        } else {
+            roseChartView.stampIndicators = stampIndicators
+        }
     }
 
     @IBAction func actionAnimateRandomBars(_ sender: UIButton) {
