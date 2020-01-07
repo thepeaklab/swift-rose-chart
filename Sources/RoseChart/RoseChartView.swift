@@ -49,6 +49,12 @@ public class RoseChartView: UIView {
         }
     }
 
+    public var drawBarsOnStamp: Bool = true {
+        didSet {
+            updateBarItems(animated: isInAnimation)
+        }
+    }
+
     // TODO: Cache
     private var maxBarValue: Double { bars.map({ $0.value }).max() ?? 0 }
 
@@ -134,8 +140,6 @@ public class RoseChartView: UIView {
             barsView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
             barsView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
         ])
-        // TODO: needed here?
-//        updateBarItems()
 
         // Stamp View
         stampView.translatesAutoresizingMaskIntoConstraints = false
@@ -186,13 +190,18 @@ public class RoseChartView: UIView {
         // skip update when there are no bars
         if barsCount == 0 && barsView.barItems.count == 0 { return }
 
+        let min = drawBarsOnStamp && isStampVisible ? 0.5 : 0.0
+        let max = 1.0
+
+        let maxBarValue = self.maxBarValue
         let newBarItems = bars.enumerated().map { enumerated -> BarItem in
             let (index, bar) = enumerated
 
             let position = Double(index) / Double(barsCount)
-            let value = bar.value / maxBarValue
+            let calculatedValue = bar.value / maxBarValue
+            let movedValueForStamp = calculatedValue * (max - min) + min
 
-            return BarItem(position: position, start: 0, end: value, color: bar.color, width: 2.0)
+            return BarItem(position: position, start: min, end: movedValueForStamp, color: bar.color, width: 2.0)
         }
 
         if animated {

@@ -30,36 +30,49 @@ class ViewController: UIViewController {
 
     private func generateRandomValues(animated: Bool) {
 //        let max = Int.random(in: 130...144)
-        let max = 144
-        var val = 100.0
-        var inc = 10.0
-        let newBars = (0...max).map { i -> RoseChartBar in
-            val += inc
-            if val >= 1 || val <= 10 {
-                inc = inc * -1
-            }
-            if Int.random(in: 0...7) == 7 {
-                inc = inc * -1
-            }
+//        let max = 144
+//        var val = 100.0
+//        var inc = 10.0
+//        let newBars = (0...max).map { i -> RoseChartBar in
+//            val += inc
+//            if val >= 1 || val <= 10 {
+//                inc = inc * -1
+//            }
+//            if Int.random(in: 0...7) == 7 {
+//                inc = inc * -1
+//            }
+//
+//            return RoseChartBar(val, color:[#colorLiteral(red: 0.269954741, green: 0.999925673, blue: 0.9018553495, alpha: 1), #colorLiteral(red: 0.269954741, green: 0.999925673, blue: 0.9018553495, alpha: 1), #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)].randomElement()!)
+//        }
+//
+//        if animated {
+//            roseChartView.animateBars(newBars)
+//        } else {
+//            roseChartView.bars = newBars
+//        }
 
-            return RoseChartBar(val, color:[#colorLiteral(red: 0.269954741, green: 0.999925673, blue: 0.9018553495, alpha: 1), #colorLiteral(red: 0.269954741, green: 0.999925673, blue: 0.9018553495, alpha: 1), #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)].randomElement()!)
-        }
-
-        if animated {
-            roseChartView.animateBars(newBars)
-        } else {
-            roseChartView.bars = newBars
-        }
-
-        let stampIndicators = [
-            RoseChartStampIndicator(from: (0...10).randomElement()!, to: (20...30).randomElement()!, color: #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)),
-            RoseChartStampIndicator(from: (70...90).randomElement()!, to: (95...100).randomElement()!, color: #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)),
+        roseChartView.bars = [
+            RoseChartBar(10, color: .red),
+            RoseChartBar(20, color: .red),
+            RoseChartBar(30, color: .red),
+            RoseChartBar(40, color: .red),
+            RoseChartBar(50, color: .red),
+            RoseChartBar(60, color: .red),
+            RoseChartBar(70, color: .red),
+            RoseChartBar(80, color: .red),
+            RoseChartBar(90, color: .red),
+            RoseChartBar(100, color: .red)
         ]
-        if animated {
-            roseChartView.animateStampIndicators(stampIndicators)
-        } else {
-            roseChartView.stampIndicators = stampIndicators
-        }
+
+//        let stampIndicators = [
+//            RoseChartStampIndicator(from: (0...10).randomElement()!, to: (20...30).randomElement()!, color: #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)),
+//            RoseChartStampIndicator(from: (70...90).randomElement()!, to: (95...100).randomElement()!, color: #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)),
+//        ]
+//        if animated {
+//            roseChartView.animateStampIndicators(stampIndicators)
+//        } else {
+//            roseChartView.stampIndicators = stampIndicators
+//        }
     }
 
     @IBAction func actionAnimateRandomBars(_ sender: UIButton) {

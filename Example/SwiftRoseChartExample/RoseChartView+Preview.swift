@@ -65,7 +65,24 @@ internal struct RoseChartViewPreview: PreviewProvider, UIViewPreviewProvider {
                                         size: .fixed(CGSize(width: 300, height: 350)),
                                         displayName: "Rose Chart 1")
 
-        return [roseChartEnerconPreview, roseChart1Preview]
+        let roseChartWithMovedValues = RoseChartView()
+        roseChartWithMovedValues.bars = [
+            RoseChartBar(10, color: .red),
+            RoseChartBar(20, color: .red),
+            RoseChartBar(30, color: .red),
+            RoseChartBar(40, color: .red),
+            RoseChartBar(50, color: .red),
+            RoseChartBar(60, color: .red),
+            RoseChartBar(70, color: .red),
+            RoseChartBar(80, color: .red),
+            RoseChartBar(90, color: .red),
+            RoseChartBar(100, color: .red)
+        ]
+        let roseChartWithMovedValuesPreview = Preview(roseChartWithMovedValues,
+                                                      size: .fixed(CGSize(width: 300, height: 350)),
+                                                      displayName: "Rose Chart with moved values")
+
+        return [roseChartEnerconPreview, roseChart1Preview, roseChartWithMovedValuesPreview]
     }()
 
 }
