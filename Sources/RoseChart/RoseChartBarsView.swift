@@ -153,8 +153,6 @@ internal class RoseChartBarsView: UIView {
                                y: radius * sin(angleInRadians) + circleCenter.y)
             }
 
-            print(points)
-
             let path = UIBezierPath(quadCurve: points)
             lineLayer.path = path?.cgPath
             lineLayer.frame = layer.bounds
