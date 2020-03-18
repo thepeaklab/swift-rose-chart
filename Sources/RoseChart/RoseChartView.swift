@@ -18,6 +18,7 @@ public class RoseChartView: UIView {
     internal var squareView = UIView()
     internal var scaleView = RoseChartScaleView()
     internal var barsView = RoseChartBarsView()
+    internal var linesView = RoseChartLineView()
     internal var stampView = RoseChartStampView()
     internal var stampViewSizeConstraint = NSLayoutConstraint()
 
@@ -147,6 +148,16 @@ public class RoseChartView: UIView {
             barsView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
         ])
 
+        // Line View
+        linesView.translatesAutoresizingMaskIntoConstraints = false
+        squareView.addSubview(linesView)
+        NSLayoutConstraint.activate([
+            linesView.leftAnchor.constraint(equalTo: squareView.leftAnchor),
+            linesView.topAnchor.constraint(equalTo: squareView.topAnchor),
+            linesView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
+            linesView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
+        ])
+
         // Stamp View
         stampView.translatesAutoresizingMaskIntoConstraints = false
         squareView.addSubview(stampView)
@@ -239,8 +250,7 @@ public class RoseChartView: UIView {
             return LineItem(position: position, value: movedValueForStamp)
         }
 
-
-        barsView.lineItems = items
+        linesView.lineItems = items
     }
 
     public func animateStampIndicators(_ stampIndicators: [RoseChartStampIndicator]) {
