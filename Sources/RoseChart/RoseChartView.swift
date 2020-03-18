@@ -41,6 +41,12 @@ public class RoseChartView: UIView {
         }
     }
 
+    public var linePoints: [RoseChartLinePoint] = [] {
+        didSet {
+            updateLineItems(animated: isInAnimation)
+        }
+    }
+
     // MARK: - Bar Values
 
     public var bars: [RoseChartBar] = [] {
@@ -217,6 +223,24 @@ public class RoseChartView: UIView {
         default:
             break
         }
+    }
+
+    private func updateLineItems(animated: Bool) {
+        let min = drawBarsOnStamp && isStampVisible ? 0.5 : 0.0
+        let max = 1.0
+
+        let items = linePoints.enumerated().map { enumerated -> LineItem in
+            let (index, line) = enumerated
+            let position = Double(index) / Double(linePoints.count)
+            let value = line.value / (linePoints.map({ $0.value }).max() ?? 0)
+
+            let movedValueForStamp = value * (max - min) + min
+
+            return LineItem(position: position, value: movedValueForStamp)
+        }
+
+
+        barsView.lineItems = items
     }
 
     public func animateStampIndicators(_ stampIndicators: [RoseChartStampIndicator]) {
