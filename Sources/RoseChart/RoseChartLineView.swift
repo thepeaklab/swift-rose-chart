@@ -9,6 +9,7 @@
 
 import UIKit
 
+
 class RoseChartLineView: UIView {
 
     internal var lineItems: [LineItem] = [] {
@@ -21,6 +22,8 @@ class RoseChartLineView: UIView {
     private var lineLayerMask: CAShapeLayer?
     private var maskedLayer: CAGradientLayer?
 
+    private var isInAnimation: Bool = false
+
     internal init() {
         super.init(frame: .zero)
     }
@@ -29,8 +32,15 @@ class RoseChartLineView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public func animateLineItems(_ lineItems: [LineItem]) {
+        isInAnimation = true
+        self.lineItems = lineItems
+    }
+
     private func updateLineItemLayers() {
         lineLayer?.removeFromSuperlayer()
+        lineLayerMask?.removeFromSuperlayer()
+        maskedLayer?.removeFromSuperlayer()
 
         if lineItems.count > 0 {
              let newLineLayer = CAShapeLayer()
@@ -54,11 +64,11 @@ class RoseChartLineView: UIView {
             maskedLayer.type = .radial
             maskedLayer.locations = [0, 1]
             maskedLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
-             maskedLayer.endPoint = CGPoint(x: 1, y: 1)
-             maskedLayer.mask = lineLayerMask
-             layer.addSublayer(maskedLayer)
+            maskedLayer.endPoint = CGPoint(x: 1, y: 1)
+            maskedLayer.mask = lineLayerMask
+            layer.addSublayer(maskedLayer)
 
-             self.maskedLayer = maskedLayer
+            self.maskedLayer = maskedLayer
          }
 
         setNeedsLayout()
@@ -92,6 +102,19 @@ class RoseChartLineView: UIView {
             maskedLayer?.bounds = linePath.bounds
             maskedLayer?.frame = linePath.bounds
         }
+
+        if isInAnimation {
+            let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+            basicAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            basicAnimation.duration = 2
+            basicAnimation.fromValue = 0
+            basicAnimation.toValue = 1
+            lineLayer.add(basicAnimation, forKey: "strokeAnimation")
+        } else {
+            lineLayer.removeAllAnimations()
+        }
+
+        isInAnimation = false
     }
 
 }

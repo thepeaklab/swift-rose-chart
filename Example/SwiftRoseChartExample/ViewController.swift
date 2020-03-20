@@ -51,7 +51,7 @@ class ViewController: UIViewController {
 //            roseChartView.bars = newBars
 //        }
 
-        roseChartView.bars = [
+        let newBars = [
             RoseChartBar(10, color: .red),
             RoseChartBar(20, color: .red),
             RoseChartBar(30, color: .red),
@@ -63,6 +63,31 @@ class ViewController: UIViewController {
             RoseChartBar(90, color: .red),
             RoseChartBar(100, color: .red)
         ]
+
+        if animated {
+            roseChartView.animateBars(newBars)
+        } else {
+            roseChartView.bars = newBars
+        }
+
+        let newLinePoints = [
+            RoseChartLinePoint(10),
+            RoseChartLinePoint(20),
+            RoseChartLinePoint(30),
+            RoseChartLinePoint(40),
+            RoseChartLinePoint(50),
+            RoseChartLinePoint(60),
+            RoseChartLinePoint(70),
+            RoseChartLinePoint(80),
+            RoseChartLinePoint(90),
+            RoseChartLinePoint(100)
+        ]
+
+        if animated {
+            roseChartView.animateLines(newLinePoints)
+        } else {
+            roseChartView.linePoints = newLinePoints
+        }
 
 //        let stampIndicators = [
 //            RoseChartStampIndicator(from: (0...10).randomElement()!, to: (20...30).randomElement()!, color: #colorLiteral(red: 0.999925673, green: 0.269954741, blue: 0.269954741, alpha: 1)),
