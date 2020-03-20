@@ -43,23 +43,23 @@ class RoseChartLineView: UIView {
         maskedLayer?.removeFromSuperlayer()
 
         if lineItems.count > 0 {
-             let newLineLayer = CAShapeLayer()
-             newLineLayer.strokeColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
-             newLineLayer.fillColor = UIColor.clear.cgColor
-             newLineLayer.lineWidth = 2
-             newLineLayer.lineCap = .round
-             lineLayer = newLineLayer
-             layer.addSublayer(newLineLayer)
+            let newLineLayer = CAShapeLayer()
+            newLineLayer.strokeColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+            newLineLayer.fillColor = UIColor.clear.cgColor
+            newLineLayer.lineWidth = 2
+            newLineLayer.lineCap = .round
+            lineLayer = newLineLayer
+            layer.addSublayer(newLineLayer)
 
-             let newLineLayerMask = CAShapeLayer()
-             lineLayerMask = newLineLayerMask
+            let newLineLayerMask = CAShapeLayer()
+            lineLayerMask = newLineLayerMask
 
-             let maskedLayer = CAGradientLayer()
-             maskedLayer.colors = [
-                 UIColor.white.withAlphaComponent(0.05).cgColor,
-                 UIColor.white.withAlphaComponent(0.15).cgColor,
-                 UIColor.white.withAlphaComponent(0.25).cgColor
-             ]
+            let maskedLayer = CAGradientLayer()
+            maskedLayer.colors = [
+                UIColor.white.withAlphaComponent(0.05).cgColor,
+                UIColor.white.withAlphaComponent(0.15).cgColor,
+                UIColor.white.withAlphaComponent(0.25).cgColor
+            ]
 
             maskedLayer.type = .radial
             maskedLayer.locations = [0, 1]
