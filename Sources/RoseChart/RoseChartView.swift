@@ -18,6 +18,7 @@ public class RoseChartView: UIView {
     internal var squareView = UIView()
     internal var scaleView = RoseChartScaleView()
     internal var barsView = RoseChartBarsView()
+    internal var linesView = RoseChartLineView()
     internal var stampView = RoseChartStampView()
     internal var stampViewSizeConstraint = NSLayoutConstraint()
 
@@ -38,6 +39,12 @@ public class RoseChartView: UIView {
     public var scaleBackgroundColor: UIColor = .clear {
         didSet {
             updateScaleColors()
+        }
+    }
+
+    public var linePoints: [RoseChartLinePoint] = [] {
+        didSet {
+            updateLineItems(animated: isInAnimation)
         }
     }
 
@@ -141,6 +148,16 @@ public class RoseChartView: UIView {
             barsView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
         ])
 
+        // Line View
+        linesView.translatesAutoresizingMaskIntoConstraints = false
+        squareView.addSubview(linesView)
+        NSLayoutConstraint.activate([
+            linesView.leftAnchor.constraint(equalTo: squareView.leftAnchor),
+            linesView.topAnchor.constraint(equalTo: squareView.topAnchor),
+            linesView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
+            linesView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
+        ])
+
         // Stamp View
         stampView.translatesAutoresizingMaskIntoConstraints = false
         squareView.addSubview(stampView)
@@ -216,6 +233,32 @@ public class RoseChartView: UIView {
             updateScaleSteps()
         default:
             break
+        }
+    }
+
+    public func animateLines(_ lines: [RoseChartLinePoint]) {
+        isInAnimation = true
+        self.linePoints = lines
+        isInAnimation = false
+    }
+
+    private func updateLineItems(animated: Bool) {
+        let min = drawBarsOnStamp && isStampVisible ? 0.5 : 0.0
+        let max = 1.0
+
+        let items = linePoints.enumerated().map { enumerated -> LineItem in
+            let (index, line) = enumerated
+            let position = Double(index) / Double(linePoints.count)
+            let value = line.value / (linePoints.map({ $0.value }).max() ?? 0)
+            let movedValueForStamp = value * (max - min) + min
+
+            return LineItem(position: position, value: movedValueForStamp)
+        }
+
+        if animated {
+            linesView.animateLineItems(items)
+        } else {
+            linesView.lineItems = items
         }
     }
 

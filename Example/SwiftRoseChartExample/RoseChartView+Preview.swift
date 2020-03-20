@@ -26,7 +26,8 @@ internal struct RoseChartViewPreview: PreviewProvider, UIViewPreviewProvider {
         let max = 144
         var val = 0.40
         var inc = 0.025
-        roseChartEnercon.bars  = (0...max).map { i in
+
+        roseChartEnercon.bars = (0...max).map { i in
             val += inc
             if val >= 1 || val <= 0.4 {
                 inc = inc * -1
@@ -37,12 +38,24 @@ internal struct RoseChartViewPreview: PreviewProvider, UIViewPreviewProvider {
             return RoseChartBar(val, color: #colorLiteral(red: 0.269954741, green: 0.999925673, blue: 0.9018553495, alpha: 1))
         }
 
+        roseChartEnercon.linePoints = (0...max).map { i in
+            val += inc
+            if val >= 1 || val <= 0.4 {
+                inc = inc * -1
+            }
+            if Int.random(in: 0...7) == 7 {
+                inc = inc * -1
+            }
+            return RoseChartLinePoint(val)
+        }
+
         let roseChartEnerconPreview = Preview(roseChartEnercon,
                                               size: .fixed(CGSize(width: 300, height: 350)),
                                               displayName: "ENERCON")
 
 
         let roseChart1 = RoseChartView()
+        roseChart1.backgroundColor = .red
         roseChart1.scale = .values(values: [
             5,
             30,
@@ -61,6 +74,20 @@ internal struct RoseChartViewPreview: PreviewProvider, UIViewPreviewProvider {
             RoseChartBar(45, color: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)),
             RoseChartBar(50, color: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1))
         ]
+
+        roseChart1.linePoints = [
+            RoseChartLinePoint(5),
+            RoseChartLinePoint(10),
+            RoseChartLinePoint(15),
+            RoseChartLinePoint(20),
+            RoseChartLinePoint(25),
+            RoseChartLinePoint(30),
+            RoseChartLinePoint(35),
+            RoseChartLinePoint(40),
+            RoseChartLinePoint(45),
+            RoseChartLinePoint(50)
+        ]
+
         let roseChart1Preview = Preview(roseChart1,
                                         size: .fixed(CGSize(width: 300, height: 350)),
                                         displayName: "Rose Chart 1")

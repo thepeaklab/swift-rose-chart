@@ -35,7 +35,6 @@ internal class RoseChartBarsView: UIView {
     public func animateBarItems(_ barItems: [BarItem]) {
         isInAnimation = true
         self.barItems = barItems
-        isInAnimation = false
     }
 
     private func updateBarItemLayers(animated: Bool) {
@@ -91,7 +90,20 @@ internal class RoseChartBarsView: UIView {
             path.addLine(to: outerPoint)
 
             shapeLayer.path = path.cgPath
+
+            if isInAnimation {
+                let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+                basicAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                basicAnimation.duration = 0.5
+                basicAnimation.fromValue = CGFloat(barItemLayer.barItem.start)
+                basicAnimation.toValue = CGFloat(barItemLayer.barItem.end)
+                shapeLayer.add(basicAnimation, forKey: "strokeAnimation")
+            } else {
+                shapeLayer.removeAllAnimations()
+            }
         }
+
+        isInAnimation = false
     }
 
     private func circlePoint(deg: CGFloat) -> CGPoint {
@@ -123,5 +135,13 @@ internal struct BarItemLayer {
 
     let barItem: BarItem
     let layer: CAShapeLayer
+
+}
+
+
+internal struct LineItem {
+
+    let position: Double
+    let value: Double
 
 }

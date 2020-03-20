@@ -138,7 +138,6 @@ internal class RoseChartScaleView: UIView {
                                                           height: scaleStepWidth)).cgPath
         }
 
-
     }
 
 }
