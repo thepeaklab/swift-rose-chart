@@ -22,6 +22,8 @@ internal class RoseChartBarsView: UIView {
 
     private var isInAnimation: Bool = false
 
+    public var animationDuration: TimeInterval = 0.9
+
     // MARK: - Init
 
     internal init() {
@@ -92,12 +94,12 @@ internal class RoseChartBarsView: UIView {
             shapeLayer.path = path.cgPath
 
             if isInAnimation {
-                let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-                basicAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-                basicAnimation.duration = 0.5
-                basicAnimation.fromValue = CGFloat(barItemLayer.barItem.start)
-                basicAnimation.toValue = CGFloat(barItemLayer.barItem.end)
-                shapeLayer.add(basicAnimation, forKey: "strokeAnimation")
+                let strokeAnimation = CABasicAnimation(keyPath: "strokeEnd")
+                strokeAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                strokeAnimation.duration = animationDuration
+                strokeAnimation.fromValue = CGFloat(barItemLayer.barItem.start)
+                strokeAnimation.toValue = CGFloat(barItemLayer.barItem.end)
+                shapeLayer.add(strokeAnimation, forKey: "strokeAnimation")
             } else {
                 shapeLayer.removeAllAnimations()
             }

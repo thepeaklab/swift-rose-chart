@@ -24,6 +24,8 @@ class RoseChartLineView: UIView {
 
     private var isInAnimation: Bool = false
 
+    public var animationDuration: TimeInterval = 0.6
+
     internal init() {
         super.init(frame: .zero)
     }
@@ -106,16 +108,18 @@ class RoseChartLineView: UIView {
         if isInAnimation {
             let strokeAnimation = CABasicAnimation(keyPath: "strokeEnd")
             strokeAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-            strokeAnimation.duration = 2
+            strokeAnimation.duration = animationDuration
             strokeAnimation.fromValue = 0
             strokeAnimation.toValue = 1
-            lineLayer.add(strokeAnimation, forKey: "strokeAnimation")
 
             let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
             scaleAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-            scaleAnimation.duration = 2
+            scaleAnimation.duration = animationDuration
             scaleAnimation.fromValue = 0
             scaleAnimation.toValue = 1
+
+            lineLayer.add(strokeAnimation, forKey: "strokeAnimation")
+            lineLayer.add(scaleAnimation, forKey: "scaleAnimation")
             maskedLayer?.add(scaleAnimation, forKey: "scaleAnimation")
         } else {
             lineLayer.removeAllAnimations()
