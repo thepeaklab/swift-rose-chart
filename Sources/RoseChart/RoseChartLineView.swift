@@ -46,7 +46,7 @@ class RoseChartLineView: UIView {
 
         if lineItems.count > 0 {
             let newLineLayer = CAShapeLayer()
-            newLineLayer.strokeColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+            newLineLayer.strokeColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2462431694).cgColor
             newLineLayer.fillColor = UIColor.clear.cgColor
             newLineLayer.lineWidth = 2
             newLineLayer.lineCap = .round

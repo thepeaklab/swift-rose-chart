@@ -138,16 +138,6 @@ public class RoseChartView: UIView {
         updateScaleColors()
         updateScaleSteps()
 
-        // Bars View
-        barsView.translatesAutoresizingMaskIntoConstraints = false
-        squareView.addSubview(barsView)
-        NSLayoutConstraint.activate([
-            barsView.leftAnchor.constraint(equalTo: squareView.leftAnchor),
-            barsView.topAnchor.constraint(equalTo: squareView.topAnchor),
-            barsView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
-            barsView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
-        ])
-
         // Line View
         linesView.translatesAutoresizingMaskIntoConstraints = false
         squareView.addSubview(linesView)
@@ -156,6 +146,16 @@ public class RoseChartView: UIView {
             linesView.topAnchor.constraint(equalTo: squareView.topAnchor),
             linesView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
             linesView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
+        ])
+
+        // Bars View
+        barsView.translatesAutoresizingMaskIntoConstraints = false
+        squareView.addSubview(barsView)
+        NSLayoutConstraint.activate([
+            barsView.leftAnchor.constraint(equalTo: squareView.leftAnchor),
+            barsView.topAnchor.constraint(equalTo: squareView.topAnchor),
+            barsView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
+            barsView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
         ])
 
         // Stamp View
