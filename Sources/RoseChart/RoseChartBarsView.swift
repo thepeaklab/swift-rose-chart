@@ -37,6 +37,7 @@ internal class RoseChartBarsView: UIView {
     public func animateBarItems(_ barItems: [BarItem]) {
         isInAnimation = true
         self.barItems = barItems
+        isInAnimation = false
     }
 
     private func updateBarItemLayers(animated: Bool) {
@@ -71,6 +72,17 @@ internal class RoseChartBarsView: UIView {
                 layer.addSublayer(shapeLayer)
             }
 
+            if animated {
+                let strokeAnimation = CABasicAnimation(keyPath: "strokeEnd")
+                strokeAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                strokeAnimation.duration = animationDuration
+                strokeAnimation.fromValue = CGFloat(barItem.start)
+                strokeAnimation.toValue = CGFloat(barItem.end)
+                shapeLayer.add(strokeAnimation, forKey: "strokeAnimation")
+            } else {
+                shapeLayer.removeAllAnimations()
+            }
+
             return BarItemLayer(barItem: barItem, layer: shapeLayer)
         }
 
@@ -92,20 +104,7 @@ internal class RoseChartBarsView: UIView {
             path.addLine(to: outerPoint)
 
             shapeLayer.path = path.cgPath
-
-            if isInAnimation {
-                let strokeAnimation = CABasicAnimation(keyPath: "strokeEnd")
-                strokeAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-                strokeAnimation.duration = animationDuration
-                strokeAnimation.fromValue = CGFloat(barItemLayer.barItem.start)
-                strokeAnimation.toValue = CGFloat(barItemLayer.barItem.end)
-                shapeLayer.add(strokeAnimation, forKey: "strokeAnimation")
-            } else {
-                shapeLayer.removeAllAnimations()
-            }
         }
-
-        isInAnimation = false
     }
 
     private func circlePoint(deg: CGFloat) -> CGPoint {
