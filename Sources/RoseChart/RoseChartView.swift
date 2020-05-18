@@ -21,6 +21,7 @@ public class RoseChartView: UIView {
     internal var linesView = RoseChartLineView()
     internal var stampView = RoseChartStampView()
     internal var stampViewSizeConstraint = NSLayoutConstraint()
+    internal var ringIndicatorView = RoseChartRingIndicatorView()
 
     // MARK: - Scale Values
 
@@ -112,15 +113,28 @@ public class RoseChartView: UIView {
     }
 
     private func initialize() {
+        // Ring Indicator View
+        ringIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(ringIndicatorView)
+        NSLayoutConstraint.activate([
+            ringIndicatorView.heightAnchor.constraint(equalTo: ringIndicatorView.widthAnchor, multiplier: 1, constant: 0),
+            ringIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 0, priority: .defaultLow),
+            ringIndicatorView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 0, priority: .defaultLow),
+            ringIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: rightAnchor, constant: 0, priority: .defaultLow),
+            ringIndicatorView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: 0, priority: .defaultLow),
+            ringIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            ringIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+
         // Square View
         squareView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(squareView)
         NSLayoutConstraint.activate([
             squareView.heightAnchor.constraint(equalTo: squareView.widthAnchor, multiplier: 1, constant: 0),
-            squareView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 0, priority: .defaultLow),
-            squareView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 0, priority: .defaultLow),
-            squareView.rightAnchor.constraint(greaterThanOrEqualTo: rightAnchor, constant: 0, priority: .defaultLow),
-            squareView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: 0, priority: .defaultLow),
+            squareView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 10, priority: .defaultLow),
+            squareView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 10, priority: .defaultLow),
+            squareView.rightAnchor.constraint(greaterThanOrEqualTo: rightAnchor, constant: -10, priority: .defaultLow),
+            squareView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -10, priority: .defaultLow),
 
             squareView.centerXAnchor.constraint(equalTo: centerXAnchor),
             squareView.centerYAnchor.constraint(equalTo: centerYAnchor)
