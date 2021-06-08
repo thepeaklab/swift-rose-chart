@@ -19,6 +19,7 @@ internal class RoseChartBarsView: UIView {
     }
 
     private var barItemLayers: [BarItemLayer] = []
+    private var highlightedLayer: CAShapeLayer?
 
     private var isInAnimation: Bool = false
 
@@ -34,6 +35,14 @@ internal class RoseChartBarsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public func highlightBarItem(atIndex index: Int) {
+        guard let barItemLayerToBeHighlighted = barItemLayers[safe: index] else { return }
+
+        highlightedLayer?.strokeStart = CGFloat(barItemLayerToBeHighlighted.barItem.start)
+        highlightedLayer?.strokeEnd = CGFloat(barItemLayerToBeHighlighted.barItem.end)
+        highlightedLayer?.path = barItemLayerToBeHighlighted.layer.path
+    }
+
     public func animateBarItems(_ barItems: [BarItem]) {
         isInAnimation = true
         self.barItems = barItems
@@ -41,6 +50,8 @@ internal class RoseChartBarsView: UIView {
     }
 
     private func updateBarItemLayers(animated: Bool) {
+        highlightedLayer?.removeFromSuperlayer()
+
         let dropLayerCount = barItemLayers.count - barItems.count
         if dropLayerCount > 0 {
             let range = barItemLayers.index(barItemLayers.endIndex,
@@ -85,6 +96,18 @@ internal class RoseChartBarsView: UIView {
 
             return BarItemLayer(barItem: barItem, layer: shapeLayer)
         }
+
+        let highlightLayer = CAShapeLayer()
+        highlightLayer.strokeColor = UIColor.white.cgColor
+        highlightLayer.fillColor = UIColor.clear.cgColor
+        highlightLayer.lineCap = .round
+        highlightLayer.lineWidth = barItemLayers.first?.barItem.width ?? 1
+        highlightLayer.strokeStart = 0
+        highlightLayer.strokeEnd = 0
+
+        self.highlightedLayer = highlightLayer
+
+        layer.addSublayer(highlightLayer)
 
         setNeedsLayout()
     }

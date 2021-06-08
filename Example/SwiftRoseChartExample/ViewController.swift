@@ -15,6 +15,8 @@ class ViewController: UIViewController {
 
     @IBOutlet var roseChartView: RoseChartView!
 
+    @IBOutlet weak var slider: UISlider!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,6 +28,11 @@ class ViewController: UIViewController {
         roseChartView.stampLineColors = [#colorLiteral(red: 0.03595770895, green: 0.294064343, blue: 0.2822898328, alpha: 1), #colorLiteral(red: 0.03595770895, green: 0.294064343, blue: 0.2822898328, alpha: 1)]
 
         generateRandomValues(animated: false)
+    }
+
+    @IBAction func actionSliderValueChanged(_ sender: UISlider) {
+        sender.value = sender.value.rounded()
+        roseChartView.highlightEntry(atIndex: Int(sender.value))
     }
 
     private func generateRandomValues(animated: Bool) {
@@ -63,6 +70,10 @@ class ViewController: UIViewController {
             RoseChartBar(90, color: .red),
             RoseChartBar(100, color: .red)
         ]
+
+        slider.value = 0
+        slider.minimumValue = 0
+        slider.maximumValue = Float(newBars.count - 1)
 
         if animated {
             roseChartView.animateBars(newBars)
