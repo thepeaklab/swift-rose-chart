@@ -18,9 +18,11 @@ class RoseChartLineView: UIView {
         }
     }
 
+    private var lineItemLayers: [LineItemLayer] = []
     private var lineLayer: CAShapeLayer?
     private var lineLayerMask: CAShapeLayer?
     private var maskedLayer: CAGradientLayer?
+    private var highlightedLayer: CAShapeLayer?
 
     private var isInAnimation: Bool = false
 
@@ -39,10 +41,27 @@ class RoseChartLineView: UIView {
         self.lineItems = lineItems
     }
 
+    public func highlightItem(at index: Int) {
+        let itemToBeHighlighted = lineItemLayers[safe: index]
+
+        guard let point = itemToBeHighlighted?.point else { return }
+        let circlePath = UIBezierPath(arcCenter: point,
+                                      radius: CGFloat(1),
+                                      startAngle: CGFloat(0),
+                                      endAngle: CGFloat(Double.pi * 2),
+                                      clockwise: true)
+        highlightedLayer?.path = circlePath.cgPath
+    }
+
+    public func resetHighlightedLineItem() {
+        highlightedLayer?.path = nil
+    }
+
     private func updateLineItemLayers() {
         lineLayer?.removeFromSuperlayer()
         lineLayerMask?.removeFromSuperlayer()
         maskedLayer?.removeFromSuperlayer()
+        highlightedLayer?.removeFromSuperlayer()
 
         if lineItems.count > 0 {
             let newLineLayer = CAShapeLayer()
@@ -71,7 +90,16 @@ class RoseChartLineView: UIView {
             layer.addSublayer(maskedLayer)
 
             self.maskedLayer = maskedLayer
+
+            let highlightedLayer = CAShapeLayer()
+            highlightedLayer.fillColor = UIColor.white.cgColor
+            highlightedLayer.strokeColor = UIColor.white.cgColor
+            highlightedLayer.lineWidth = 3.0
+            layer.addSublayer(highlightedLayer)
+
+            self.highlightedLayer = highlightedLayer
          }
+        
 
         setNeedsLayout()
     }
@@ -81,17 +109,20 @@ class RoseChartLineView: UIView {
 
         guard let lineLayer = lineLayer, lineItems.count > 0 else { return }
 
-        let points: [CGPoint] = lineItems.enumerated().map { lineItem in
+        lineItemLayers = lineItems.enumerated().map { lineItem in
             let totalWidth = layer.frame.size.width
             let radius = (totalWidth / 2.0) * CGFloat(lineItem.element.value)
             let angleInRadians = CGFloat((360.0 * lineItem.element.position) - 90.0).toRadians()
             let circleCenter = CGPoint(x: layer.frame.size.width / 2.0,
                                        y: layer.frame.size.height / 2.0)
 
-            return CGPoint(x: radius * cos(angleInRadians) + circleCenter.x,
-                           y: radius * sin(angleInRadians) + circleCenter.y)
+            let point = CGPoint(x: radius * cos(angleInRadians) + circleCenter.x,
+                                y: radius * sin(angleInRadians) + circleCenter.y)
+
+            return LineItemLayer(lineItem: lineItem.element, point: point)
         }
 
+        let points = lineItemLayers.compactMap({ $0.point })
         let path = UIBezierPath(quadCurve: points)
         lineLayer.path = path?.cgPath
         lineLayer.frame = layer.bounds
@@ -127,5 +158,13 @@ class RoseChartLineView: UIView {
 
         isInAnimation = false
     }
+
+}
+
+
+internal struct LineItemLayer {
+
+    let lineItem: LineItem
+    let point: CGPoint
 
 }

@@ -161,6 +161,7 @@ public class RoseChartView: UIView {
             linesView.rightAnchor.constraint(equalTo: squareView.rightAnchor),
             linesView.bottomAnchor.constraint(equalTo: squareView.bottomAnchor)
         ])
+        bringSubviewToFront(linesView)
 
         // Bars View
         barsView.translatesAutoresizingMaskIntoConstraints = false
@@ -312,6 +313,16 @@ public class RoseChartView: UIView {
         if !isStampVisible { return } // skip updating other values when stamp is invisible
         stampView.stampBackgroundColors = stampBackgroundColors
         stampView.stampLineColors = stampLineColors
+    }
+
+    public func highlightEntry(at index: Int) {
+        barsView.highlightBarItem(at: index)
+        linesView.highlightItem(at: index)
+    }
+
+    public func resetHighlightedEntry() {
+        barsView.resetHighlightedBarItem()
+        linesView.resetHighlightedLineItem()
     }
 
 }
