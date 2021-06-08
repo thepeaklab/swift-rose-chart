@@ -37,14 +37,23 @@
                                     <action selector="actionSliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="i9c-HZ-0Tb"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7y-gV-i54">
+                                <rect key="frame" x="126" y="842" width="162" height="30"/>
+                                <state key="normal" title="Reset Highlighted Entry"/>
+                                <connections>
+                                    <action selector="actionButtonResetHighlightedEntryTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mGf-mi-c6z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="i7B-eO-6RT" firstAttribute="top" secondItem="a59-lL-yAZ" secondAttribute="bottom" constant="47" id="5eG-ci-ay0"/>
                             <constraint firstItem="ybm-FL-uYd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ALx-Xo-0tK"/>
+                            <constraint firstItem="l7y-gV-i54" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="FdA-Os-Prk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ybm-FL-uYd" secondAttribute="bottom" constant="40" id="Gz2-rw-IAy"/>
                             <constraint firstItem="a59-lL-yAZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="Iap-d4-cx8"/>
+                            <constraint firstItem="l7y-gV-i54" firstAttribute="top" secondItem="ybm-FL-uYd" secondAttribute="bottom" constant="20" id="LQN-I3-bpg"/>
                             <constraint firstItem="i7B-eO-6RT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Phs-eW-Ide"/>
                             <constraint firstItem="a59-lL-yAZ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="bNd-TA-qpR"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ybm-FL-uYd" secondAttribute="trailing" constant="20" id="nC3-XW-hEC"/>

@@ -32,7 +32,11 @@ class ViewController: UIViewController {
 
     @IBAction func actionSliderValueChanged(_ sender: UISlider) {
         sender.value = sender.value.rounded()
-        roseChartView.highlightEntry(atIndex: Int(sender.value))
+        roseChartView.highlightEntry(at: Int(sender.value))
+    }
+
+    @IBAction func actionButtonResetHighlightedEntryTouchUpInside(_ sender: Any) {
+        roseChartView.resetHighlightedEntry()
     }
 
     private func generateRandomValues(animated: Bool) {

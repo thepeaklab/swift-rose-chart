@@ -315,9 +315,14 @@ public class RoseChartView: UIView {
         stampView.stampLineColors = stampLineColors
     }
 
-    public func highlightEntry(atIndex index: Int) {
-        barsView.highlightBarItem(atIndex: index)
-        linesView.highlightItem(atIndex: index)
+    public func highlightEntry(at index: Int) {
+        barsView.highlightBarItem(at: index)
+        linesView.highlightItem(at: index)
+    }
+
+    public func resetHighlightedEntry() {
+        barsView.resetHighlightedBarItem()
+        linesView.resetHighlightedLineItem()
     }
 
 }

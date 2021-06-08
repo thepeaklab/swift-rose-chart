@@ -41,7 +41,7 @@ class RoseChartLineView: UIView {
         self.lineItems = lineItems
     }
 
-    public func highlightItem(atIndex index: Int) {
+    public func highlightItem(at index: Int) {
         let itemToBeHighlighted = lineItemLayers[safe: index]
 
         guard let point = itemToBeHighlighted?.point else { return }
@@ -51,6 +51,10 @@ class RoseChartLineView: UIView {
                                       endAngle: CGFloat(Double.pi * 2),
                                       clockwise: true)
         highlightedLayer?.path = circlePath.cgPath
+    }
+
+    public func resetHighlightedLineItem() {
+        highlightedLayer?.path = nil
     }
 
     private func updateLineItemLayers() {

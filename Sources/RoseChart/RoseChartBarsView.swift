@@ -35,12 +35,17 @@ internal class RoseChartBarsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public func highlightBarItem(atIndex index: Int) {
+    public func highlightBarItem(at index: Int) {
         guard let barItemLayerToBeHighlighted = barItemLayers[safe: index] else { return }
 
         highlightedLayer?.strokeStart = CGFloat(barItemLayerToBeHighlighted.barItem.start)
         highlightedLayer?.strokeEnd = CGFloat(barItemLayerToBeHighlighted.barItem.end)
         highlightedLayer?.path = barItemLayerToBeHighlighted.layer.path
+    }
+
+    public func resetHighlightedBarItem() {
+        highlightedLayer?.strokeEnd = 0
+        highlightedLayer?.strokeStart = 0
     }
 
     public func animateBarItems(_ barItems: [BarItem]) {
