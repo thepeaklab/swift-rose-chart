@@ -119,9 +119,9 @@ public class RoseChartView: UIView {
         NSLayoutConstraint.activate([
             ringIndicatorView.heightAnchor.constraint(equalTo: ringIndicatorView.widthAnchor, multiplier: 1, constant: 0),
             ringIndicatorView.leftAnchor.constraint(greaterThanOrEqualTo: leftAnchor, constant: 0, priority: .defaultLow),
-            ringIndicatorView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 0, priority: .defaultLow),
+            ringIndicatorView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 0),
             ringIndicatorView.rightAnchor.constraint(greaterThanOrEqualTo: rightAnchor, constant: 0, priority: .defaultLow),
-            ringIndicatorView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: 0, priority: .defaultLow),
+            ringIndicatorView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: 0),
             ringIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
             ringIndicatorView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
